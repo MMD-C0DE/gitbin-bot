@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+gitbin/__init__.py
+gitbin/client.py
+gitbin/errors.py
+gitbin/methods.py
+gitbin/types.py
+gitbin_bot.egg-info/PKG-INFO
+gitbin_bot.egg-info/SOURCES.txt
+gitbin_bot.egg-info/dependency_links.txt
+gitbin_bot.egg-info/requires.txt
+gitbin_bot.egg-info/top_level.txt
+tests/test_basic.py

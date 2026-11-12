@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gitbin-bot"
+version = "1.0.0"
+description = "کتابخانه پایتون برای GitBin Bot API"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "MMD", email = "ammmd219@gmail.com" }]
+keywords = ["gitbin", "bot", "api", "telegram", "messenger"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Communications :: Chat",
+]
+dependencies = ["requests>=2.28"]
+
+[project.urls]
+Homepage = "https://github.com/MMD-C0DE/gitbin-bot"
+Documentation = "https://github.com/MMD-C0DE/gitbin-bot#readme"
+Issues = "https://github.com/MMD-C0DE/gitbin-bot/issues"
+
+[tool.setuptools.packages.find]
+include = ["gitbin*"]
