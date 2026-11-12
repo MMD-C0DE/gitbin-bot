@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مستندات gitbin-bot | کتابخانه پایتون GitBin</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: #0a0e1a;
+    color: #e2e8f0;
+    line-height: 1.9;
+    direction: rtl;
+  }
+
+  /* ===== Header ===== */
+  header {
+    background: linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 50%, #1e293b 100%);
+    padding: 70px 20px 50px;
+    text-align: center;
+    border-bottom: 3px solid #8b5cf6;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+    animation: rotate 25s linear infinite;
+  }
+  @keyframes rotate { to { transform: rotate(360deg); } }
+  header > * { position: relative; z-index: 1; }
+  header h1 {
+    font-size: 44px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #a78bfa, #60a5fa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+  header p { color: #94a3b8; font-size: 17px; margin-bottom: 20px; }
+  .badge-row {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #8b5cf6;
+  }
+
+  /* ===== Layout ===== */
+  .layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+  .sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: #131829;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #1e293b;
+  }
+  .sidebar h3 {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .sidebar ul { list-style: none; }
+  .sidebar li { margin-bottom: 3px; }
+  .sidebar a {
+    display: block;
+    padding: 7px 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .sidebar a:hover { background: #1e293b; color: #a78bfa; }
+  .sidebar a.active {
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+    color: white;
+  }
+  .content { flex: 1; min-width: 0; }
+
+  /* ===== Stats ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #1a1f3a, #1e293b);
+    padding: 25px 20px;
+    border-radius: 14px;
+    text-align: center;
+    border: 1px solid #1e293b;
+  }
+  .stat-card .num {
+    font-size: 36px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-card .lbl { color: #94a3b8; font-size: 13px; margin-top: 6px; }
+
+  /* ===== Info Box ===== */
+  .info-box {
+    background: linear-gradient(135deg, #1e293b, #1a1f3a);
+    border-right: 4px solid #3b82f6;
+    padding: 20px 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border-top: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+    border-left: 1px solid #1e293b;
+  }
+  .info-box p { margin-bottom: 6px; font-size: 14px; }
+  .info-box code {
+    background: #0a0e1a;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #fbbf24;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    direction: ltr;
+    display: inline-block;
+  }
+
+  /* ===== Category ===== */
+  .category {
+    margin-bottom: 50px;
+    scroll-margin-top: 20px;
+  }
+  .category h2 {
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+  }
+  .category h2 .count {
+    margin-right: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: normal;
+  }
+
+  /* ===== Method Card ===== */
+  .method {
+    background: #131829;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    border: 1px solid #1e293b;
+    transition: all 0.3s;
+  }
+  .method:hover {
+    border-color: #8b5cf6;
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
+  }
+  .method-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .method-name {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fbbf24;
+    background: #0a0e1a;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    direction: ltr;
+  }
+  .status {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #10b981;
+    color: white;
+  }
+  .method-desc {
+    color: #cbd5e1;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  /* ===== Params Table ===== */
+  .params { margin-top: 14px; overflow-x: auto; }
+  .params h4 {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .params table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #0a0e1a;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .params th {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 600;
+  }
+  .params td {
+    padding: 10px 14px;
+    border-top: 1px solid #1e293b;
+  }
+  .params td code {
+    background: #1e293b;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #fbbf24;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    direction: ltr;
+    display: inline-block;
+  }
+  .req { color: #ef4444; font-weight: 700; }
+  .opt { color: #64748b; }
+
+  /* ===== Code Block ===== */
+  .code-block {
+    background: #0a0e1a;
+    padding: 18px;
+    border-radius: 10px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    margin-top: 14px;
+    direction: ltr;
+    text-align: left;
+    border: 1px solid #1e293b;
+    line-height: 1.7;
+  }
+  .code-block .kw { color: #c084fc; }
+  .code-block .str { color: #86efac; }
+  .code-block .num { color: #fbbf24; }
+  .code-block .com { color: #475569; font-style: italic; }
+  .code-block .fn { color: #60a5fa; }
+
+  /* ===== Footer ===== */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #64748b;
+    border-top: 1px solid #1e293b;
+    margin-top: 60px;
+    background: #0a0e1a;
+  }
+  footer a { color: #8b5cf6; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ===== Back to top ===== */
+  .back-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 22px;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+    border: none;
+  }
+  .back-top.show { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; position: static; max-height: none; }
+    header h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐍 مستندات gitbin-bot</h1>
+  <p>کتابخانه پایتون برای GitBin Bot API — ساده، کامل، حرفه‌ای</p>
+  <div class="badge-row">
+    <span class="badge">✅ ۴۵ متد</span>
+    <span class="badge">🐍 Python 3.8+</span>
+    <span class="badge">📦 pip install gitbin-bot</span>
+    <span class="badge">⚖️ MIT License</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar">
+    <h3>فهرست</h3>
+    <ul>
+      <li><a href="#install">🚀 نصب و شروع</a></li>
+      <li><a href="#identity">🔹 هویت و آپدیت</a></li>
+      <li><a href="#commands">🔹 دستورات و منو</a></li>
+      <li><a href="#messages">🔹 ارسال پیام</a></li>
+      <li><a href="#media">🔹 ارسال مدیا</a></li>
+      <li><a href="#location">🔹 موقعیت</a></li>
+      <li><a href="#edit">🔹 ویرایش و حذف</a></li>
+      <li><a href="#chat">🔹 مدیریت چت</a></li>
+      <li><a href="#stars">🔹 استارز</a></li>
+      <li><a href="#payments">🔹 پرداخت</a></li>
+      <li><a href="#webapp">🔹 WebApp</a></li>
+      <li><a href="#errors">🔹 خطاها</a></li>
+      <li><a href="#links">🔗 لینک‌ها</a></li>
+    </ul>
+  </aside>
+
+  <!-- ===== Content ===== -->
+  <main class="content">
+
+    <!-- ===== نصب ===== -->
+    <section class="category" id="install">
+      <h2>🚀 نصب و شروع <span class="count">۳ قدم</span></h2>
+
+      <div class="info-box">
+        <p>🔗 <b>PyPI:</b> <code>pip install gitbin-bot</code></p>
+        <p>🐍 <b>پایتون:</b> 3.8 یا بالاتر</p>
+        <p>📦 <b>وابستگی:</b> فقط <code>requests</code></p>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">pip install</span>
+          <span class="status">سریع</span>
+        </div>
+        <div class="method-desc">نصب از PyPI</div>
+        <div class="code-block">
+<span class="com"># نصب</span>
+pip install gitbin-bot
+
+<span class="com"># تست</span>
+python -c <span class="str">"from gitbin import Bot; print('ok')"</span>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">اولین اسکریپت</span>
+          <span class="status">شروع</span>
+        </div>
+        <div class="method-desc">اتصال به API و ارسال پیام</div>
+        <div class="code-block">
+<span class="kw">from</span> gitbin <span class="kw">import</span> Bot
+
+bot = <span class="fn">Bot</span>(token=<span class="str">"YOUR_BOT_TOKEN"</span>)
+
+<span class="com"># اطلاعات ربات</span>
+me = bot.<span class="fn">get_me</span>()
+<span class="fn">print</span>(me[<span class="str">"first_name"</span>])
+
+<span class="com"># ارسال پیام</span>
+bot.<span class="fn">send_message</span>(chat_id=<span class="num">123456789</span>, text=<span class="str">"سلام 👋"</span>)
+
+<span class="com"># موجودی استارز</span>
+bal = bot.<span class="fn">get_my_star_balance</span>()
+<span class="fn">print</span>(f<span class="str">"{bal['amount']:,} استارز"</span>)
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== هویت ===== -->
+    <section class="category" id="identity">
+      <h2>🔹 هویت و آپدیت <span class="count">۶ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getMe</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">اطلاعات ربات (آیدی، نام، یوزرنیم) — برای تست اتصال و توکن</div>
+        <div class="code-block">
+me = bot.<span class="fn">get_me</span>()
+<span class="com"># {"id": 123, "is_bot": true, "first_name": "ربات", "username": "my_bot"}</span>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getUpdates</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">دریافت آپدیت‌ها با Long Polling</div>
+        <div class="params">
+          <h4>پارامترها</h4>
+          <table>
+            <tr><th>نام</th><th>نوع</th><th>الزامی</th><th>توضیح</th></tr>
+            <tr><td><code>offset</code></td><td>int</td><td class="opt">—</td><td>آخرین update_id + 1</td></tr>
+            <tr><td><code>limit</code></td><td>int</td><td class="opt">—</td><td>حداکثر ۱۰۰</td></tr>
+            <tr><td><code>timeout</code></td><td>int</td><td class="opt">—</td><td>۰ تا ۵۰ ثانیه</td></tr>
+            <tr><td><code>allowed_updates</code></td><td>list</td><td class="opt">—</td><td>فیلتر نوع آپدیت</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getFile</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">گرفتن مسیر دانلود فایل بر اساس file_id</div>
+        <div class="code-block">
+r = bot.<span class="fn">get_file</span>(file_id=<span class="str">"BQACAgIAAxkB..."</span>)
+<span class="fn">print</span>(r[<span class="str">"file_path"</span>])
+<span class="com"># دانلود از: https://api.gitbin.site/file/botTOKEN/{file_path}</span>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">setWebhook</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">تنظیم آدرس سرور برای دریافت مستقیم آپدیت‌ها (HTTPS)</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">deleteWebhook</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">حذف webhook — قبل از استفاده از getUpdates لازمه</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getWebhookInfo</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">وضعیت webhook فعلی</div>
+      </div>
+    </section>
+
+    <!-- ===== دستورات ===== -->
+    <section class="category" id="commands">
+      <h2>🔹 دستورات و منو <span class="count">۴ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">setMyCommands</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">تنظیم لیست دستورات ربات (تا ۱۰۰ دستور)</div>
+        <div class="code-block">
+bot.<span class="fn">set_my_commands</span>([
+    {<span class="str">"command"</span>: <span class="str">"start"</span>, <span class="str">"description"</span>: <span class="str">"شروع"</span>},
+    {<span class="str">"command"</span>: <span class="str">"help"</span>,  <span class="str">"description"</span>: <span class="str">"راهنما"</span>},
+])
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getMyCommands</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">دریافت لیست دستورات فعلی</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">setChatMenuButton</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">تنظیم دکمه منوی چت</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">getChatMenuButton</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">دریافت دکمه منوی چت</div>
+      </div>
+    </section>
+
+    <!-- ===== پیام ===== -->
+    <section class="category" id="messages">
+      <h2>🔹 ارسال پیام <span class="count">۳ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">sendMessage</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">ارسال پیام متنی — پشتیبانی از HTML، Markdown، دکمه شیشه‌ای</div>
+        <div class="params">
+          <h4>پارامترها</h4>
+          <table>
+            <tr><th>نام</th><th>نوع</th><th>الزامی</th><th>توضیح</th></tr>
+            <tr><td><code>chat_id</code></td><td>int</td><td class="req">✔</td><td>شناسه چت</td></tr>
+            <tr><td><code>text</code></td><td>str</td><td class="req">✔</td><td>متن (حداکثر ۴۰۹۶)</td></tr>
+            <tr><td><code>parse_mode</code></td><td>str</td><td class="opt">—</td><td>HTML / Markdown</td></tr>
+            <tr><td><code>reply_markup</code></td><td>dict</td><td class="opt">—</td><td>دکمه شیشه‌ای</td></tr>
+            <tr><td><code>reply_to_message_id</code></td><td>int</td><td class="opt">—</td><td>ریپلای به پیام</td></tr>
+          </table>
+        </div>
+        <div class="code-block">
+bot.<span class="fn">send_message</span>(
+    chat_id=<span class="num">123</span>,
+    text=<span class="str">"سلام 👋"</span>,
+    parse_mode=<span class="str">"HTML"</span>,
+    reply_markup={
+        <span class="str">"inline_keyboard"</span>: [
+            [{<span class="str">"text"</span>: <span class="str">"✅ بله"</span>, <span class="str">"callback_data"</span>: <span class="str">"yes"</span>}],
+            [{<span class="str">"text"</span>: <span class="str">"❌ خیر"</span>, <span class="str">"callback_data"</span>: <span class="str">"no"</span>}],
+        ]
+    }
+)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">sendDice</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">ارسال تاس/بسکتبال/فوتبال/... — عدد توسط سرور تعیین می‌شه</div>
+        <div class="params">
+          <h4>ایموجی‌های پشتیبانی‌شده</h4>
+          <table>
+            <tr><th>ایموجی</th><th>بازی</th><th>بازه</th></tr>
+            <tr><td>🎲</td><td>تاس</td><td>۱ تا ۶</td></tr>
+            <tr><td>🎯</td><td>دارت</td><td>۱ تا ۶</td></tr>
+            <tr><td>🎳</td><td>بولینگ</td><td>۱ تا ۶</td></tr>
+            <tr><td>🏀</td><td>بسکتبال</td><td>۱ تا ۵</td></tr>
+            <tr><td>⚽</td><td>فوتبال</td><td>۱ تا ۵</td></tr>
+            <tr><td>🎰</td><td>اسلات</td><td>۱ تا ۶۴</td></tr>
+          </table>
+        </div>
+        <div class="code-block">
+r = bot.<span class="fn">send_dice</span>(chat_id=<span class="num">123</span>, emoji=<span class="str">"🏀"</span>)
+<span class="fn">print</span>(r[<span class="str">"dice"</span>][<span class="str">"value"</span>])
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header">
+          <span class="method-name">answerCallbackQuery</span>
+          <span class="status">✅</span>
+        </div>
+        <div class="method-desc">پاسخ به کلیک روی دکمه شیشه‌ای</div>
+        <div class="code-block">
+bot.<span class="fn">answer_callback_query</span>(
+    callback_query_id=<span class="str">"4382..."</span>,
+    text=<span class="str">"✅ انجام شد"</span>,
+    show_alert=<span class="kw">False</span>
+)
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== مدیا ===== -->
+    <section class="category" id="media">
+      <h2>🔹 ارسال مدیا <span class="count">۹ متد</span></h2>
+      <div class="info-box">
+        <p>📌 همه متدهای مدیا <code>chat_id</code> + فیلد مدیا + <code>caption</code> اختیاری قبول می‌کنن.</p>
+        <p>📏 سقف حجم: <b>۲۵ مگابایت</b> فایل + ۱ مگابایت سربار.</p>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendPhoto</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال عکس</div>
+        <div class="code-block">
+bot.<span class="fn">send_photo</span>(chat_id=<span class="num">123</span>, photo=<span class="str">"https://..."</span>, caption=<span class="str">"بنر"</span>)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendDocument</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال فایل</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendVideo</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال ویدیو</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendAudio</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال صدا</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendVoice</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال ویس</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendVideoNote</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال ویدیو گرد</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendAnimation</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال GIF</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendSticker</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال استیکر</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendVideoNote</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال ویدیو گرد</div>
+      </div>
+    </section>
+
+    <!-- ===== موقعیت ===== -->
+    <section class="category" id="location">
+      <h2>🔹 موقعیت <span class="count">۳ متد</span></h2>
+      <div class="info-box">
+        <p>⚠️ این متدها به‌جای <code>chat_id</code> معمولی، <code>receiver_user_id</code> هم لازم دارن.</p>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendLocation</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال مختصات</div>
+        <div class="code-block">
+bot.<span class="fn">send_location</span>(
+    chat_id=<span class="num">123</span>,
+    receiver_user_id=<span class="num">456</span>,
+    latitude=<span class="num">35.6892</span>,
+    longitude=<span class="num">51.3890</span>
+)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendVenue</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال مکان با عنوان و آدرس</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendContact</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال شماره تلفن + نام</div>
+      </div>
+    </section>
+
+    <!-- ===== ویرایش ===== -->
+    <section class="category" id="edit">
+      <h2>🔹 ویرایش و حذف <span class="count">۲ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">editMessageText</span><span class="status">✅</span></div>
+        <div class="method-desc">ویرایش متن پیام ارسال‌شده</div>
+        <div class="code-block">
+bot.<span class="fn">edit_message_text</span>(
+    chat_id=<span class="num">123</span>,
+    message_id=<span class="num">10</span>,
+    text=<span class="str">"متن جدید"</span>
+)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">deleteMessage</span><span class="status">✅</span></div>
+        <div class="method-desc">حذف پیام</div>
+        <div class="code-block">
+bot.<span class="fn">delete_message</span>(chat_id=<span class="num">123</span>, message_id=<span class="num">10</span>)
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== مدیریت چت ===== -->
+    <section class="category" id="chat">
+      <h2>🔹 مدیریت چت <span class="count">۸ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">banChatMember</span><span class="status">✅</span></div>
+        <div class="method-desc">بن کردن کاربر</div>
+        <div class="code-block">
+bot.<span class="fn">ban_chat_member</span>(chat_id=<span class="num">-100123</span>, user_id=<span class="num">444</span>)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">unbanChatMember</span><span class="status">✅</span></div>
+        <div class="method-desc">آزاد کردن کاربر از بن</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">restrictChatMember</span><span class="status">✅</span></div>
+        <div class="method-desc">محدود کردن کاربر (سکوت)</div>
+        <div class="code-block">
+bot.<span class="fn">restrict_chat_member</span>(
+    chat_id=<span class="num">-100123</span>,
+    user_id=<span class="num">444</span>,
+    permissions={<span class="str">"can_send_messages"</span>: <span class="kw">False</span>}
+)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">promoteChatMember</span><span class="status">✅</span></div>
+        <div class="method-desc">ارتقا به ادمین</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">pinChatMessage</span><span class="status">✅</span></div>
+        <div class="method-desc">پین کردن پیام</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">unpinChatMessage</span><span class="status">✅</span></div>
+        <div class="method-desc">برداشتن پین</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">getChatAdministrators</span><span class="status">✅</span></div>
+        <div class="method-desc">لیست ادمین‌های گروه</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">getChatMember</span><span class="status">✅</span></div>
+        <div class="method-desc">اطلاعات یک عضو</div>
+      </div>
+    </section>
+
+    <!-- ===== استارز ===== -->
+    <section class="category" id="stars">
+      <h2>🔹 استارز <span class="count">۶ متد</span></h2>
+      <div class="info-box">
+        <p>⭐️ قابلیت ویژه GitBin — کیف پول استارز ربات.</p>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">getMyStarBalance</span><span class="status">✅</span></div>
+        <div class="method-desc">موجودی فعلی استارز ربات</div>
+        <div class="code-block">
+bal = bot.<span class="fn">get_my_star_balance</span>()
+<span class="fn">print</span>(bal[<span class="str">"amount"</span>])  <span class="com"># 44990</span>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">transferStars</span><span class="status">✅</span></div>
+        <div class="method-desc">انتقال استارز به یک کاربر (۱ تا ۱۰,۰۰۰)</div>
+        <div class="code-block">
+r = bot.<span class="fn">transfer_stars</span>(user_id=<span class="num">1780243226</span>, amount=<span class="num">10</span>)
+<span class="fn">print</span>(r[<span class="str">"balance"</span>])  <span class="com"># موجودی جدید</span>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">getAvailableGifts</span><span class="status">✅</span></div>
+        <div class="method-desc">لیست گیفت‌های قابل ارسال</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendGift</span><span class="status">✅</span></div>
+        <div class="method-desc">ارسال گیفت</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">giftPremiumSubscription</span><span class="status">✅</span></div>
+        <div class="method-desc">هدیه اشتراک پرمیوم</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">refundStarPayment</span><span class="status">✅</span></div>
+        <div class="method-desc">بازگشت پرداخت استارز</div>
+      </div>
+    </section>
+
+    <!-- ===== پرداخت ===== -->
+    <section class="category" id="payments">
+      <h2>🔹 پرداخت <span class="count">۳ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">sendInvoice</span><span class="status">✅</span></div>
+        <div class="method-desc">صدور فاکتور پرداخت</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">answerPreCheckoutQuery</span><span class="status">✅</span></div>
+        <div class="method-desc">پاسخ به کوئری پیش‌پرداخت</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">answerShippingQuery</span><span class="status">⚠️</span></div>
+        <div class="method-desc">در اسکن ۴۰۴ داد — با احتیاط استفاده کن</div>
+      </div>
+    </section>
+
+    <!-- ===== WebApp ===== -->
+    <section class="category" id="webapp">
+      <h2>🔹 WebApp <span class="count">۳ متد</span></h2>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">answerWebAppQuery</span><span class="status">✅</span></div>
+        <div class="method-desc">پاسخ به کوئری WebApp</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">savePreparedInlineMessage</span><span class="status">✅</span></div>
+        <div class="method-desc">ذخیره پیام inline آماده</div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">setUserEmojiStatus</span><span class="status">✅</span></div>
+        <div class="method-desc">تنظیم وضعیت ایموجی کاربر</div>
+      </div>
+    </section>
+
+    <!-- ===== خطاها ===== -->
+    <section class="category" id="errors">
+      <h2>🔹 خطاها <span class="count">مدیریت حرفه‌ای</span></h2>
+
+      <div class="info-box">
+        <p>✅ هر <code>description</code> یک Exception اختصاصی داره.</p>
+        <p>💡 می‌تونی دقیقاً بگیری چه خطایی رخ داده.</p>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">try/except</span><span class="status">مثال</span></div>
+        <div class="code-block">
+<span class="kw">from</span> gitbin <span class="kw">import</span> Bot, GitbinError
+<span class="kw">from</span> gitbin.errors <span class="kw">import</span> ChatIdInvalid, BalanceTooLow
+
+<span class="kw">try</span>:
+    bot.<span class="fn">send_message</span>(chat_id=<span class="str">"bad"</span>, text=<span class="str">"x"</span>)
+<span class="kw">except</span> ChatIdInvalid <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="str">"چت نامعتبر:"</span>, e)
+<span class="kw">except</span> BalanceTooLow <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="str">"موجودی کم:"</span>, e)
+<span class="kw">except</span> GitbinError <span class="kw">as</span> e:
+    <span class="fn">print</span>(f<span class="str">"خطای دیگر: {e.code} {e.description}"</span>)
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">لیست خطاها</span><span class="status">۲۰+</span></div>
+        <div class="params">
+          <table>
+            <tr><th>Exception</th><th>description</th><th>معنی</th></tr>
+            <tr><td><code>ChatIdInvalid</code></td><td>CHAT_ID_INVALID</td><td>چت نامعتبر</td></tr>
+            <tr><td><code>UserIdInvalid</code></td><td>USER_ID_INVALID</td><td>کاربر نامعتبر</td></tr>
+            <tr><td><code>FileIdInvalid</code></td><td>FILE_ID_INVALID</td><td>فایل نامعتبر</td></tr>
+            <tr><td><code>MethodNotFound</code></td><td>METHOD_NOT_FOUND</td><td>متد وجود ندارد</td></tr>
+            <tr><td><code>AccessTokenInvalid</code></td><td>ACCESS_TOKEN_INVALID</td><td>توکن نامعتبر</td></tr>
+            <tr><td><code>BalanceTooLow</code></td><td>BALANCE_TOO_LOW</td><td>موجودی کم</td></tr>
+            <tr><td><code>EphemeralTargetRequired</code></td><td>EPHEMERAL_TARGET_REQUIRED</td><td>receiver_user_id لازم</td></tr>
+            <tr><td><code>FileTooBig</code></td><td>FILE_TOO_BIG</td><td>فایل بزرگ‌تر از ۲۵MB</td></tr>
+            <tr><td><code>ConflictError</code></td><td>CONFLICT</td><td>درخواست تکراری</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== لینک‌ها ===== -->
+    <section class="category" id="links">
+      <h2>🔗 لینک‌ها <span class="count">منابع</span></h2>
+
+      <div class="method">
+        <div class="method-header"><span class="method-name">منابع</span><span class="status">📚</span></div>
+        <div class="params">
+          <table>
+            <tr><th>منبع</th><th>لینک</th></tr>
+            <tr><td>📦 PyPI</td><td><code>pypi.org/project/gitbin-bot</code></td></tr>
+            <tr><td>🐙 GitHub</td><td><code>github.com/MMD-C0DE/gitbin-bot</code></td></tr>
+            <tr><td>📖 مستندات GitBin</td><td><code>api.gitbin.site</code></td></tr>
+            <tr><td>💬 پشتیبانی</td><td><code>@Php</code></td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p>🐍 ساخته شده با ❤️ توسط <a href="https://github.com/MMD-C0DE">MMD-C0DE</a></p>
+  <p style="margin-top:10px;font-size:13px;">gitbin-bot v1.0.0 — MIT License</p>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+
+<script>
+  const sections = document.querySelectorAll('.category');
+  const navLinks = document.querySelectorAll('.sidebar a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      const top = s.offsetTop - 100;
+      if (window.scrollY >= top) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+    document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+  });
+
+  document.getElementById('backTop').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
