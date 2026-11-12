@@ -8,17 +8,18 @@
 <link href="https://cdn.jsdelivr.net/gh/PrismJS/prism-themes@master/themes/prism-one-dark.min.css" rel="stylesheet">
 <style>
   :root {
-    --bg: #060914;
-    --bg-card: rgba(19, 24, 41, 0.7);
-    --bg-hover: #1a1f3a;
-    --border: rgba(139, 92, 246, 0.15);
-    --border-hover: rgba(139, 92, 246, 0.5);
-    --text: #e2e8f0;
+    --bg: #030712;
+    --bg-card: rgba(12, 24, 48, 0.6);
+    --bg-hover: #0f1e3d;
+    --border: rgba(56, 189, 248, 0.15);
+    --border-hover: rgba(56, 189, 248, 0.6);
+    --text: #e0f2fe;
     --text-muted: #94a3b8;
-    --purple: #8b5cf6;
-    --pink: #ec4899;
-    --blue: #3b82f6;
+    --blue: #0ea5e9;
     --cyan: #06b6d4;
+    --teal: #14b8a6;
+    --sky: #38bdf8;
+    --indigo: #6366f1;
     --green: #10b981;
     --yellow: #fbbf24;
     --red: #ef4444;
@@ -35,27 +36,27 @@
     position: relative;
   }
 
-  /* ===== پس‌زمینه متحرک ===== */
+  /* ===== پس‌زمینه متحرک آبی ===== */
   body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background:
-      radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 90% 10%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
-      radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-      radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+      radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.2) 0%, transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
+      radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.12) 0%, transparent 45%);
     z-index: -1;
-    animation: bgShift 20s ease-in-out infinite alternate;
+    animation: bgShift 25s ease-in-out infinite alternate;
   }
   @keyframes bgShift {
     0% { transform: scale(1) rotate(0deg); }
-    100% { transform: scale(1.1) rotate(3deg); }
+    100% { transform: scale(1.15) rotate(4deg); }
   }
 
   /* ===== Header ===== */
   header {
-    padding: 90px 20px 70px;
+    padding: 100px 20px 80px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -64,27 +65,28 @@
     content: '';
     position: absolute;
     top: 50%; left: 50%;
-    width: 800px; height: 800px;
+    width: 900px; height: 900px;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 60%);
-    animation: pulse 4s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 60%);
+    animation: pulse 5s ease-in-out infinite;
     z-index: -1;
   }
   @keyframes pulse {
     0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.25); opacity: 0.9; }
   }
   header h1 {
-    font-size: 64px;
+    font-size: 68px;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #06b6d4 100%);
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 30%, #14b8a6 60%, #0ea5e9 100%);
+    background-size: 250% 250%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 900;
     letter-spacing: -2px;
-    animation: gradientMove 4s ease infinite;
+    animation: gradientMove 5s ease infinite;
+    text-shadow: 0 0 80px rgba(14, 165, 233, 0.3);
   }
   @keyframes gradientMove {
     0%, 100% { background-position: 0% 50%; }
@@ -92,56 +94,58 @@
   }
   header p {
     color: var(--text-muted);
-    font-size: 19px;
-    margin-bottom: 28px;
+    font-size: 20px;
+    margin-bottom: 30px;
     font-weight: 500;
   }
   .badge-row {
     display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
   }
   .badge {
-    background: rgba(139, 92, 246, 0.1);
-    color: #c4b5fd;
-    padding: 8px 20px;
+    background: rgba(14, 165, 233, 0.1);
+    color: #7dd3fc;
+    padding: 9px 22px;
     border-radius: 24px;
     font-size: 13px;
-    font-weight: 600;
-    border: 1px solid rgba(139, 92, 246, 0.35);
+    font-weight: 700;
+    border: 1px solid rgba(56, 189, 248, 0.35);
     backdrop-filter: blur(10px);
     transition: all 0.3s;
   }
   .badge:hover {
-    background: rgba(139, 92, 246, 0.25);
+    background: rgba(14, 165, 233, 0.25);
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
   }
   .channel-btn {
     display: inline-block;
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    padding: 16px 36px;
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6);
+    background-size: 200% 200%;
     color: white;
     text-decoration: none;
     border-radius: 30px;
     font-size: 16px;
     font-weight: 700;
-    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.5);
+    box-shadow: 0 10px 40px rgba(14, 165, 233, 0.5);
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+    animation: gradientMove 4s ease infinite;
   }
   .channel-btn::before {
     content: '';
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s;
   }
   .channel-btn:hover::before { left: 100%; }
   .channel-btn:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 15px 50px rgba(139, 92, 246, 0.7);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 20px 60px rgba(14, 165, 233, 0.7);
   }
 
   /* ===== Layout ===== */
@@ -165,10 +169,10 @@
     border-radius: 20px;
     padding: 22px;
     border: 1px solid var(--border);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
   .sidebar::-webkit-scrollbar { width: 6px; }
-  .sidebar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); border-radius: 3px; }
   .sidebar h3 {
     font-size: 12px;
     color: #64748b;
@@ -193,15 +197,15 @@
     position: relative;
   }
   .sidebar a:hover {
-    background: rgba(139, 92, 246, 0.15);
-    color: #c4b5fd;
+    background: rgba(14, 165, 233, 0.15);
+    color: #7dd3fc;
     transform: translateX(-4px);
   }
   .sidebar a.active {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.3));
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.5), rgba(6, 182, 212, 0.4));
     color: white;
     font-weight: 700;
-    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.5);
   }
   .content { flex: 1; min-width: 0; }
 
@@ -217,11 +221,11 @@
     align-items: center;
     gap: 14px;
     transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
   .search-box:focus-within {
-    border-color: var(--purple);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4);
   }
   .search-box input {
     flex: 1;
@@ -241,15 +245,15 @@
   .category { margin-bottom: 60px; scroll-margin-top: 20px; }
   .category h2 {
     color: white;
-    padding: 22px 30px;
-    border-radius: 18px;
-    margin-bottom: 26px;
+    padding: 24px 32px;
+    border-radius: 20px;
+    margin-bottom: 28px;
     font-size: 24px;
     display: flex;
     align-items: center;
     gap: 14px;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(59, 130, 246, 0.9));
-    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.9), rgba(6, 182, 212, 0.9), rgba(20, 184, 166, 0.9));
+    box-shadow: 0 12px 45px rgba(14, 165, 233, 0.45);
     position: relative;
     overflow: hidden;
     font-weight: 800;
@@ -259,8 +263,8 @@
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: shine 3s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shine 3.5s infinite;
   }
   @keyframes shine {
     0% { left: -100%; }
@@ -269,7 +273,7 @@
   .category h2 .count {
     margin-right: auto;
     background: rgba(255,255,255,0.25);
-    padding: 5px 16px;
+    padding: 6px 18px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 700;
@@ -293,13 +297,13 @@
     position: absolute;
     top: 0; right: 0;
     width: 4px; height: 100%;
-    background: linear-gradient(180deg, var(--purple), var(--pink));
+    background: linear-gradient(180deg, #0ea5e9, #14b8a6);
     opacity: 0;
     transition: opacity 0.3s;
   }
   .method:hover {
     border-color: var(--border-hover);
-    box-shadow: 0 15px 50px rgba(139, 92, 246, 0.25);
+    box-shadow: 0 15px 55px rgba(14, 165, 233, 0.3);
     transform: translateY(-3px);
   }
   .method:hover::before { opacity: 1; }
@@ -316,22 +320,23 @@
     font-family: 'Fira Code', 'Courier New', monospace;
     font-size: 17px;
     font-weight: 800;
-    color: #fbbf24;
-    background: rgba(251, 191, 36, 0.08);
+    color: #7dd3fc;
+    background: rgba(14, 165, 233, 0.1);
     padding: 10px 22px;
     border-radius: 12px;
-    border: 1px solid rgba(251, 191, 36, 0.25);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     direction: ltr;
     letter-spacing: -0.5px;
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
   }
   .status {
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
-    background: linear-gradient(135deg, #10b981, #06b6d4);
+    background: linear-gradient(135deg, #10b981, #14b8a6);
     color: white;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
   }
   .method-desc {
     color: #cbd5e1;
@@ -342,20 +347,20 @@
 
   /* ===== Info Box ===== */
   .info-box {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(6, 182, 212, 0.08));
     backdrop-filter: blur(20px);
     border-right: 4px solid var(--blue);
-    padding: 22px 28px;
+    padding: 24px 30px;
     border-radius: 16px;
     margin-bottom: 32px;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     border-left: 1px solid var(--border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
   }
   .info-box p { margin-bottom: 8px; font-size: 14px; }
   .info-box code {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     padding: 4px 12px;
     border-radius: 8px;
     color: var(--yellow);
@@ -380,14 +385,14 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border);
   }
   .params th {
-    background: rgba(139, 92, 246, 0.15);
-    color: #c4b5fd;
+    background: rgba(14, 165, 233, 0.18);
+    color: #7dd3fc;
     padding: 14px 16px;
     text-align: right;
     font-weight: 700;
@@ -400,7 +405,7 @@
     border-top: 1px solid var(--border);
   }
   .params td code {
-    background: rgba(139, 92, 246, 0.15);
+    background: rgba(14, 165, 233, 0.18);
     padding: 3px 10px;
     border-radius: 6px;
     color: var(--yellow);
@@ -418,10 +423,10 @@
     margin-top: 18px;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
   }
   .code-wrapper pre {
-    background: #0d1117 !important;
+    background: #0a1628 !important;
     padding: 24px !important;
     border-radius: 14px !important;
     font-family: 'Fira Code', 'Courier New', monospace !important;
@@ -429,7 +434,7 @@
     overflow-x: auto;
     direction: ltr;
     text-align: left;
-    border: 1px solid rgba(139, 92, 246, 0.2) !important;
+    border: 1px solid rgba(56, 189, 248, 0.2) !important;
     line-height: 1.75 !important;
     margin: 0 !important;
   }
@@ -437,26 +442,26 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.4), rgba(6, 182, 212, 0.4));
     color: white;
-    border: 1px solid rgba(139, 92, 246, 0.5);
+    border: 1px solid rgba(56, 189, 248, 0.6);
     padding: 8px 16px;
     border-radius: 10px;
     font-size: 12px;
     cursor: pointer;
     font-family: inherit;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.25s;
     z-index: 10;
     backdrop-filter: blur(10px);
   }
   .copy-btn:hover {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(236, 72, 153, 0.6));
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.7), rgba(6, 182, 212, 0.7));
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 6px 25px rgba(14, 165, 233, 0.5);
   }
   .copy-btn.copied {
-    background: linear-gradient(135deg, #10b981, #06b6d4);
+    background: linear-gradient(135deg, #10b981, #14b8a6);
     border-color: #10b981;
   }
 
@@ -467,16 +472,16 @@
     color: #64748b;
     border-top: 1px solid var(--border);
     margin-top: 80px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(3, 7, 18, 0.6);
     backdrop-filter: blur(20px);
   }
   footer a {
-    color: #a78bfa;
+    color: #38bdf8;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
   }
-  footer a:hover { color: #ec4899; }
+  footer a:hover { color: #06b6d4; }
 
   /* ===== Back to top ===== */
   .back-top {
@@ -485,7 +490,7 @@
     left: 32px;
     width: 58px;
     height: 58px;
-    background: linear-gradient(135deg, var(--purple), var(--pink));
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -493,7 +498,7 @@
     cursor: pointer;
     color: white;
     font-size: 26px;
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+    box-shadow: 0 12px 35px rgba(14, 165, 233, 0.6);
     opacity: 0;
     transition: all 0.4s;
     z-index: 100;
@@ -503,14 +508,14 @@
   .back-top.show { opacity: 1; }
   .back-top:hover {
     transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.8);
+    box-shadow: 0 18px 50px rgba(14, 165, 233, 0.8);
   }
 
-  /* ===== Animations on load ===== */
+  /* ===== Animations ===== */
   .fade-in {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s, transform 0.6s;
+    transform: translateY(25px);
+    transition: opacity 0.7s, transform 0.7s;
   }
   .fade-in.visible {
     opacity: 1;
@@ -520,7 +525,7 @@
   @media (max-width: 900px) {
     .layout { flex-direction: column; }
     .sidebar { width: 100%; position: static; max-height: none; }
-    header h1 { font-size: 38px; }
+    header h1 { font-size: 40px; }
     .copy-btn { font-size: 11px; padding: 6px 12px; }
   }
 </style>
@@ -573,12 +578,11 @@
     <!-- نصب -->
     <section class="category fade-in" id="install">
       <h2>🚀 نصب و شروع <span class="count">۳ قدم</span></h2>
-
       <div class="info-box">
         <p>🔗 <b>PyPI:</b> <code>pip install gitbin-bot</code></p>
         <p>🐍 <b>پایتون:</b> 3.8 یا بالاتر</p>
         <p>📦 <b>وابستگی:</b> فقط <code>requests</code></p>
-        <p>📢 <b>کانال:</b> <a href="https://gitbin.site/GITBIN_LIB" target="_blank" style="color:#a78bfa;">gitbin.site/GITBIN_LIB</a></p>
+        <p>📢 <b>کانال:</b> <a href="https://gitbin.site/GITBIN_LIB" target="_blank" style="color:#7dd3fc;">gitbin.site/GITBIN_LIB</a></p>
       </div>
 
       <div class="method fade-in">
@@ -632,7 +636,6 @@ while True:
     <!-- نمونه کدها -->
     <section class="category fade-in" id="examples">
       <h2>💡 نمونه کدها <span class="count">۴ پروژه</span></h2>
-
       <div class="info-box">
         <p>🚀 این‌ها با همین کتابخانه کار می‌کنن. کپی کن، توکن بذار، اجرا کن.</p>
         <p>📦 پیش‌نیاز: <code>pip install gitbin-bot</code></p>
@@ -850,25 +853,10 @@ print(me["first_name"])</code></pre>
         </div>
       </div>
 
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">getFile</span><span class="status">✅</span></div>
-        <div class="method-desc">گرفتن مسیر دانلود فایل بر اساس file_id</div>
-      </div>
-
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">setWebhook</span><span class="status">✅</span></div>
-        <div class="method-desc">تنظیم آدرس سرور برای دریافت مستقیم آپدیت‌ها</div>
-      </div>
-
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">deleteWebhook</span><span class="status">✅</span></div>
-        <div class="method-desc">حذف webhook — قبل از getUpdates لازمه</div>
-      </div>
-
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">getWebhookInfo</span><span class="status">✅</span></div>
-        <div class="method-desc">وضعیت webhook فعلی</div>
-      </div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">getFile</span><span class="status">✅</span></div><div class="method-desc">گرفتن مسیر دانلود فایل بر اساس file_id</div></div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">setWebhook</span><span class="status">✅</span></div><div class="method-desc">تنظیم آدرس سرور برای دریافت مستقیم آپدیت‌ها</div></div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">deleteWebhook</span><span class="status">✅</span></div><div class="method-desc">حذف webhook — قبل از getUpdates لازمه</div></div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">getWebhookInfo</span><span class="status">✅</span></div><div class="method-desc">وضعیت webhook فعلی</div></div>
     </section>
 
     <!-- دستورات -->
@@ -887,20 +875,9 @@ print(me["first_name"])</code></pre>
         </div>
       </div>
 
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">getMyCommands</span><span class="status">✅</span></div>
-        <div class="method-desc">دریافت لیست دستورات فعلی</div>
-      </div>
-
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">setChatMenuButton</span><span class="status">✅</span></div>
-        <div class="method-desc">تنظیم دکمه منوی چت</div>
-      </div>
-
-      <div class="method fade-in">
-        <div class="method-header"><span class="method-name">getChatMenuButton</span><span class="status">✅</span></div>
-        <div class="method-desc">دریافت دکمه منوی چت</div>
-      </div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">getMyCommands</span><span class="status">✅</span></div><div class="method-desc">دریافت لیست دستورات فعلی</div></div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">setChatMenuButton</span><span class="status">✅</span></div><div class="method-desc">تنظیم دکمه منوی چت</div></div>
+      <div class="method fade-in"><div class="method-header"><span class="method-name">getChatMenuButton</span><span class="status">✅</span></div><div class="method-desc">دریافت دکمه منوی چت</div></div>
     </section>
 
     <!-- پیام -->
@@ -1100,7 +1077,6 @@ print(r["balance"])</code></pre>
     <!-- پرداخت -->
     <section class="category fade-in" id="payments">
       <h2>🔹 پرداخت <span class="count">۳ متد</span></h2>
-
       <div class="method fade-in"><div class="method-header"><span class="method-name">sendInvoice</span><span class="status">✅</span></div><div class="method-desc">صدور فاکتور پرداخت</div></div>
       <div class="method fade-in"><div class="method-header"><span class="method-name">answerPreCheckoutQuery</span><span class="status">✅</span></div><div class="method-desc">پاسخ به کوئری پیش‌پرداخت</div></div>
       <div class="method fade-in"><div class="method-header"><span class="method-name">answerShippingQuery</span><span class="status">⚠️</span></div><div class="method-desc">در اسکن ۴۰۴ داد — با احتیاط</div></div>
@@ -1109,7 +1085,6 @@ print(r["balance"])</code></pre>
     <!-- WebApp -->
     <section class="category fade-in" id="webapp">
       <h2>🔹 WebApp <span class="count">۳ متد</span></h2>
-
       <div class="method fade-in"><div class="method-header"><span class="method-name">answerWebAppQuery</span><span class="status">✅</span></div><div class="method-desc">پاسخ به کوئری WebApp</div></div>
       <div class="method fade-in"><div class="method-header"><span class="method-name">savePreparedInlineMessage</span><span class="status">✅</span></div><div class="method-desc">ذخیره پیام inline آماده</div></div>
       <div class="method fade-in"><div class="method-header"><span class="method-name">setUserEmojiStatus</span><span class="status">✅</span></div><div class="method-desc">تنظیم وضعیت ایموجی کاربر</div></div>
@@ -1118,7 +1093,6 @@ print(r["balance"])</code></pre>
     <!-- خطاها -->
     <section class="category fade-in" id="errors">
       <h2>🔹 خطاها <span class="count">مدیریت حرفه‌ای</span></h2>
-
       <div class="info-box">
         <p>✅ هر <code>description</code> یک Exception اختصاصی داره.</p>
       </div>
@@ -1163,16 +1137,15 @@ except GitbinError as e:
     <!-- لینک‌ها -->
     <section class="category fade-in" id="links">
       <h2>🔗 لینک‌ها <span class="count">منابع</span></h2>
-
       <div class="method fade-in">
         <div class="method-header"><span class="method-name">منابع</span><span class="status">📚</span></div>
         <div class="params">
           <table>
             <tr><th>منبع</th><th>لینک</th></tr>
-            <tr><td>📢 کانال کتابخانه</td><td><a href="https://gitbin.site/GITBIN_LIB" target="_blank" style="color:#a78bfa;">gitbin.site/GITBIN_LIB</a></td></tr>
-            <tr><td>📦 PyPI</td><td><a href="https://pypi.org/project/gitbin-bot/" target="_blank" style="color:#a78bfa;">pypi.org/project/gitbin-bot</a></td></tr>
-            <tr><td>🐙 GitHub</td><td><a href="https://github.com/MMD-C0DE/gitbin-bot" target="_blank" style="color:#a78bfa;">github.com/MMD-C0DE/gitbin-bot</a></td></tr>
-            <tr><td>📖 مستندات GitBin</td><td><a href="https://api.gitbin.site" target="_blank" style="color:#a78bfa;">api.gitbin.site</a></td></tr>
+            <tr><td>📢 کانال کتابخانه</td><td><a href="https://gitbin.site/GITBIN_LIB" target="_blank" style="color:#7dd3fc;">gitbin.site/GITBIN_LIB</a></td></tr>
+            <tr><td>📦 PyPI</td><td><a href="https://pypi.org/project/gitbin-bot/" target="_blank" style="color:#7dd3fc;">pypi.org/project/gitbin-bot</a></td></tr>
+            <tr><td>🐙 GitHub</td><td><a href="https://github.com/MMD-C0DE/gitbin-bot" target="_blank" style="color:#7dd3fc;">github.com/MMD-C0DE/gitbin-bot</a></td></tr>
+            <tr><td>📖 مستندات GitBin</td><td><a href="https://api.gitbin.site" target="_blank" style="color:#7dd3fc;">api.gitbin.site</a></td></tr>
             <tr><td>💬 پشتیبانی</td><td><code>@MAMAD</code></td></tr>
           </table>
         </div>
@@ -1252,7 +1225,6 @@ except GitbinError as e:
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // انیمیشن ورود
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) e.target.classList.add('visible');
